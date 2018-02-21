@@ -1,5 +1,6 @@
 // Using the new operator to create a  pointer to a chunk of memory
-#include<iostream>
+#include <iostream>
+
 int main()
 {
     int* pt = new int;
