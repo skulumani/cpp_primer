@@ -8,7 +8,7 @@ SRCFILES := $(wildcard *.cpp)
 OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
 DEPFILES := $(patsubst %.cpp,%.d, $(SRCFILES))
 
-all: bookstore ex1-2 while ex1-9
+all: bookstore ex1-2 while ex1-9 ex1-10
 
 bookstore: bookstore.cpp
 	$(CXX) bookstore.cpp $(INCDIRS) $(CXXFLAGS) -o bookstore
@@ -21,6 +21,9 @@ while: while.cpp
 
 ex1-9: ex1-9.cpp
 	$(CXX) ex1-9.cpp $(INCDIRS) $(CXXFLAGS) -o ex1-9
+	
+ex1-10: ex1-10.cpp
+	$(CXX) ex1-10.cpp $(INCDIRS) $(CXXFLAGS) -o ex1-10
 	
 clean: 
 	rm -f *.o *.d
