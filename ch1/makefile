@@ -34,5 +34,8 @@ ex1-16: ex1-16.cpp
 ex1-17: ex1-17.cpp
 	$(CXX) ex1-17.cpp $(INCDIRS) $(CXXFLAGS) -o ex1-17
 
+ex1-20: ex1-20.cpp Sales_item.h
+	$(CXX) ex1-20.cpp $(INCDIRS) $(CXXFLAGS) -o ex1-20
+
 clean: 
 	rm -f *.o *.d
