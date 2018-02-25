@@ -3,4 +3,6 @@
 
 int count_calls();
 
+int fact(int val);
+
 #endif
