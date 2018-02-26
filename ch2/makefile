@@ -1,18 +1,32 @@
-PRODUCT := out
+PRODUCT := ex6-10
 
+# directories
+BINDIR := bin
+INCDIR := include
+SRCDIR := src
+BUILDDIR := build
+
+# compiler flags
 CXX := g++
 LINKER := g++
-INCDIRS := -I.
-CXXFLAGS := -std=c++11 -Wall -Wextra
-SRCFILES := $(wildcard *.cpp)
-OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
-DEPFILES := $(patsubst %.cpp,%.d, $(SRCFILES))
+INCDIRS := -I$(INCDIR)
+CXXFLAGS := -std=c++11 -Wall -Wextra -pedantic
 
-all: ex2-4
+SRCFILES := $(wildcard $(SRCDIR)/*.cpp)
+OBJFILES := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCFILES))
+DEPFILES := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.d, $(SRCFILES))
 
 
-ex2-4: ex2-4.cpp
-	$(CXX) ex2-4.cpp $(INCDIRS) $(CXXFLAGS) -o ex2-4
+# link the object files
+$(PRODUCT): $(OBJFILES)
+	$(LINKER) $^ -o $@
 
-clean: 
-	rm -f *.o *.d
+# compile src to object files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCDIRS) -c $< -o $@
+
+# build dependencies
+%.d: %.cpp
+	$(CXX) $(INCDIRS) -MM $< | sed 's/^/$@ /' > $@
+
+-include $(DEPFILES)
