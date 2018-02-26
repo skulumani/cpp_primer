@@ -16,20 +16,18 @@ SRCFILES := $(wildcard $(SRCDIR)/*.cpp)
 OBJFILES := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCFILES))
 DEPFILES := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.d, $(SRCFILES))
 
+all: $(BINDIR)/ex6-10 $(BINDIR)/ex6-1 $(BINDIR)/fact_main
 
 # link the object files
-$(BINDIR)/$(PRODUCT): $(OBJFILES)
-	$(LINKER) $(CXXFLAGS) $^ -o $@
+$(BINDIR)/ex6-10: $(SRCDIR)/ex6-10.cpp $(SRCDIR)/swap.cpp
+	$(CXX) $(CXXFLAGS) $(INCDIRS) $^ -o $@
 
-# compile src to object files
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(INCDIRS) -c $< -o $@
+$(BINDIR)/ex6-1: $(SRCDIR)/ex6-1.cpp 
+	$(CXX) $(CXXFLAGS) $(INCDIRS) $^ -o $@
 
-# build dependencies
-$(BUILDDIR)/%.d: $(SRCDIR)/%.cpp
-	$(CXX) $(INCDIRS) -MM $< | sed 's/^/$@ /' > $@
+$(BINDIR)/fact_main: $(SRCDIR)/fact_main.cpp $(SRCDIR)/fact.cpp
+	$(CXX) $(CXXFLAGS) $(INCDIRS) $^ -o $@
 
-$(OBJDIR)/%.d: $(SRCDIR)/%.cpp
-	$(CXX) $(INCDIRS) -MM $< | sed -e 's%^%$@ %' -e 's% % $(OBJDIR)/%' > $@
+clean:
+	rm -r $(BUILDDIR)/* $(BINDIR)/*
 
--include $(DEPFILES)
